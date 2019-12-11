@@ -37,8 +37,8 @@ namespace Examples
                 // create user session data and provide login details
                 var userSession = new UserSessionData
                 {
-                    UserName = "Username",
-                    Password = "Password"
+                    UserName = "bnw_itallosan",
+                    Password = "Itall0{}$$"
                 };
                 // if you want to set custom device (user-agent) please check this:
                 // https://github.com/ramtinak/InstagramApiSharp/wiki/Set-custom-device(user-agent)
