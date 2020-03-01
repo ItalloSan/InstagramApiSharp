@@ -393,11 +393,27 @@ namespace ChallengeRequireExample
                 StringBuilder sb = new StringBuilder();
                 StringBuilder sb2 = new StringBuilder();
                 sb2.AppendLine("Like 5 Media>");
-                foreach (var item in topicalExplore.Value.Medias.Take(5))
+                //foreach (var item in topicalExplore.Value.Medias.Take(5))
+                //{
+                // like media...
+                //    var liked = await InstaApi.MediaProcessor.LikeMediaAsync(item.InstaIdentifier);
+                //    sb2.AppendLine($"{item.InstaIdentifier} liked? {liked.Succeeded}");
+                //}
+
+                var result = await InstaApi.StoryProcessor.GetStoryFeedAsync();
+                if (!result.Succeeded)
                 {
-                    // like media...
-                    var liked = await InstaApi.MediaProcessor.LikeMediaAsync(item.InstaIdentifier);
-                    sb2.AppendLine($"{item.InstaIdentifier} liked? {liked.Succeeded}");
+                    Console.WriteLine($"Unable to get story feed: {result.Info}");
+                    return;
+                }
+                var storyFeed = result.Value;
+                Console.WriteLine($"Got {storyFeed.Items.Count} story reels.");
+                foreach (var feedItem in storyFeed.Items)
+                {
+                    Console.WriteLine($"User: {feedItem.User.FullName}");
+                    foreach (var item in feedItem.Items)
+                        Console.WriteLine(
+                            $"Story item: {item.Caption?.Text ?? item.Code}, images:{item.ImageList?.Count ?? 0}, videos: {item.VideoList?.Count ?? 0}");
                 }
 
                 sb.AppendLine("Explore categories: " + topicalExplore.Value.Clusters.Count);
